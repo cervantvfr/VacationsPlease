@@ -12,7 +12,9 @@ import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
 import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import java.time.LocalDate;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LeaveRequestService {
     private final EmployeeRepository employeeRepository;
     private final LeaveTypeRepository leaveTypeRepository;
