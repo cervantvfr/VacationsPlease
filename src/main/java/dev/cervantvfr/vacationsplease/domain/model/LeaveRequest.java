@@ -45,7 +45,7 @@ public class LeaveRequest {
         this.leaveType = leaveType;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = LeaveRequestStatus.PENDING;
+        this.status = status;
         this.reason = reason;
         this.createdAt = OffsetDateTime.now();
     }

@@ -124,4 +124,22 @@ class LeaveRequestServiceTest {
             )
         );
     }
+
+    @Test
+    void submitRequestThenFail_rollsBackSavedRequest() {
+        long before = leaveRequestRepository.count();
+
+        assertThrows(RuntimeException.class, () ->
+            leaveRequestService.submitRequestThenFail(
+                employee.getId(),
+                leaveType.getCode(),
+                LocalDate.of(2026, 8, 1),
+                LocalDate.of(2026, 8, 3),
+                "Rollback proof"
+            )
+        );
+
+        long after = leaveRequestRepository.count();
+        assertEquals(before, after, "Count should be the same");        
+    }
 }
