@@ -64,17 +64,18 @@ public class LeaveRequestService {
         return leaveRequestRepository.save(request);
     }
 
-    @Transactional
-    public void submitRequestThenFail(
-            Long employeeId,
-            String leaveTypeCode,
-            LocalDate startDate,
-            LocalDate endDate,
-            String reason
-    ) {
+    // Rollback proof test
+    // @Transactional
+    // public void submitRequestThenFail(
+    //         Long employeeId,
+    //         String leaveTypeCode,
+    //         LocalDate startDate,
+    //         LocalDate endDate,
+    //         String reason
+    // ) {
 
-        LeaveRequest saved = submitRequest(employeeId, leaveTypeCode, startDate, endDate, reason);
+    //     LeaveRequest saved = submitRequest(employeeId, leaveTypeCode, startDate, endDate, reason);
         
-        throw new RuntimeException("Forced failure. request id: " + saved.getId());
-    }
+    //     throw new RuntimeException("Forced failure. request id: " + saved.getId());
+    // }
 }
