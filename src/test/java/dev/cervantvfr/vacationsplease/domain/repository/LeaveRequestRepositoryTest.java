@@ -11,6 +11,9 @@ import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabas
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
 
 @DataJpaTest(properties = {
     "spring.flyway.enabled=false",
@@ -34,6 +37,7 @@ class LeaveRequestRepositoryTest {
             LeaveRequestStatus.PENDING,
             "trip"
         );
+
         testEntityManager.persist(employee);
         testEntityManager.persist(leaveType);
         testEntityManager.persist(existing);
@@ -46,6 +50,7 @@ class LeaveRequestRepositoryTest {
             LocalDate.of(2026, 6, 11),
             LocalDate.of(2026, 6, 13)
         );
+
         Assertions.assertTrue(result);
     }
 
@@ -73,6 +78,7 @@ class LeaveRequestRepositoryTest {
             LocalDate.of(2026, 6, 20),
             LocalDate.of(2026, 6, 22)
         );
+
         Assertions.assertFalse(result);
     }
 
@@ -104,6 +110,53 @@ class LeaveRequestRepositoryTest {
                 LocalDate.of(2026, 6, 11),
                 LocalDate.of(2026, 6, 13)
         );
+        
         Assertions.assertFalse(result);
+    }
+
+    @Test
+    void findByEmployeeIdOrderByCreatedAtDesc_returnsPage() {
+        Employee employee = new Employee("john@test.com","John","Test");
+        LeaveType leaveType = new LeaveType("PTO","Paid Time Off", true);
+        LeaveRequest request1 = new LeaveRequest(
+            employee,
+            leaveType,
+            LocalDate.of(2026, 6, 11),
+            LocalDate.of(2026, 6, 13),
+            LeaveRequestStatus.PENDING,
+            "trip"
+        );
+
+        LeaveRequest request2 = new LeaveRequest(
+            employee,
+            leaveType,
+            LocalDate.of(2026, 6, 14),
+            LocalDate.of(2026, 6, 16),
+            LeaveRequestStatus.PENDING,
+            "vacation"
+        );
+        
+        LeaveRequest request3 = new LeaveRequest(
+            employee,
+            leaveType,
+            LocalDate.of(2026, 6, 17),
+            LocalDate.of(2026, 6, 19),
+            LeaveRequestStatus.PENDING,
+            "vacation"
+        );
+
+        testEntityManager.persist(employee);
+        testEntityManager.persist(leaveType);
+        testEntityManager.persist(request1);
+        testEntityManager.persist(request2);
+        testEntityManager.persist(request3);
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        Page<LeaveRequest> page = leaveRequestRepository.findByEmployeeIdOrderByCreatedAtDesc(employee.getId(), PageRequest.of(0, 2, Sort.by("createdAt").descending()));
+
+        Assertions.assertEquals(2, page.getContent().size());
+        Assertions.assertEquals(3, page.getTotalElements());
+        Assertions.assertEquals(2, page.getTotalPages());
     }
 }
