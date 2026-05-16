@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
 import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
@@ -65,6 +67,25 @@ public class LeaveRequestService {
         return leaveRequestRepository.save(request);
     }
 
+    @Transactional(readOnly = true)
+    public LeaveRequest getRequest(Long id) {
+        return leaveRequestRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Leave request not found " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LeaveRequest> listAll(Pageable pageable) {
+        return leaveRequestRepository.findAllByOrderByCreatedAtDesc(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LeaveRequest> listByEmployee(Long employeeId, Pageable pageable) {
+        if (!employeeRepository.existsById(employeeId)) {
+            throw new ResourceNotFoundException("Employee not found " + employeeId);
+        }
+        return leaveRequestRepository.findByEmployeeIdOrderByCreatedAtDesc(employeeId, pageable);
+    }
+    
     // Rollback proof test
     // @Transactional
     // public void submitRequestThenFail(
