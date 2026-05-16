@@ -1,12 +1,14 @@
 package dev.cervantvfr.vacationsplease.application.service;
-
 import java.time.LocalDate;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import dev.cervantvfr.vacationsplease.api.dto.LeaveRequestResponse;
+import dev.cervantvfr.vacationsplease.api.dto.PagedResponse;
+import dev.cervantvfr.vacationsplease.api.mapper.LeaveRequestApiMapper;
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
 import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
@@ -23,7 +25,10 @@ public class LeaveRequestService {
     private final LeaveTypeRepository leaveTypeRepository;
     private final LeaveRequestRepository leaveRequestRepository;
 
-    public LeaveRequestService(EmployeeRepository employeeRepository, LeaveTypeRepository leaveTypeRepository, LeaveRequestRepository leaveRequestRepository) {
+    public LeaveRequestService(
+            EmployeeRepository employeeRepository,
+            LeaveTypeRepository leaveTypeRepository,
+            LeaveRequestRepository leaveRequestRepository) {
         this.employeeRepository = employeeRepository;
         this.leaveTypeRepository = leaveTypeRepository;
         this.leaveRequestRepository = leaveRequestRepository;
@@ -68,22 +73,25 @@ public class LeaveRequestService {
     }
 
     @Transactional(readOnly = true)
-    public LeaveRequest getRequest(Long id) {
-        return leaveRequestRepository.findById(id)
+    public LeaveRequestResponse getById(Long id) {
+        LeaveRequest request = leaveRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Leave request not found " + id));
+        return LeaveRequestApiMapper.toResponse(request);
     }
 
     @Transactional(readOnly = true)
-    public Page<LeaveRequest> listAll(Pageable pageable) {
-        return leaveRequestRepository.findAllByOrderByCreatedAtDesc(pageable);
+    public PagedResponse<LeaveRequestResponse> listAll(Pageable pageable) {
+        return LeaveRequestApiMapper.toPagedResponse(
+                leaveRequestRepository.findAllByOrderByCreatedAtDesc(pageable));
     }
 
     @Transactional(readOnly = true)
-    public Page<LeaveRequest> listByEmployee(Long employeeId, Pageable pageable) {
+    public PagedResponse<LeaveRequestResponse> listByEmployee(Long employeeId, Pageable pageable) {
         if (!employeeRepository.existsById(employeeId)) {
             throw new ResourceNotFoundException("Employee not found " + employeeId);
         }
-        return leaveRequestRepository.findByEmployeeIdOrderByCreatedAtDesc(employeeId, pageable);
+        return LeaveRequestApiMapper.toPagedResponse(
+                leaveRequestRepository.findByEmployeeIdOrderByCreatedAtDesc(employeeId, pageable));
     }
     
     // Rollback proof test

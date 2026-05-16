@@ -99,7 +99,8 @@ class LeaveRequestControllerTest {
     @WithMockUser
     @Test
     void submitLeaveRequest_returns409_whenBusinessRuleFails() throws Exception {
-        doThrow(new BusinessRuleViolationException("Overlapping leave request already exists")).when(leaveRequestService).submitRequest(anyLong(), anyString(), any(), any(), any());
+        doThrow(new BusinessRuleViolationException("Overlapping leave request already exists")).when(leaveRequestService).submitRequest(
+            anyLong(), anyString(), any(), any(), any());
 
         String json = """
                 {
@@ -122,7 +123,8 @@ class LeaveRequestControllerTest {
     @WithMockUser
     @Test
     void submitLeaveRequest_returns404_whenEmployeeOrTypeMissing() throws Exception {
-        doThrow(new ResourceNotFoundException("Employee not found")).when(leaveRequestService).submitRequest(anyLong(), anyString(), any(), any(), any());
+        doThrow(new ResourceNotFoundException("Employee not found")).when(leaveRequestService).submitRequest(
+            anyLong(), anyString(), any(), any(), any());
 
         String json = """
                 {
