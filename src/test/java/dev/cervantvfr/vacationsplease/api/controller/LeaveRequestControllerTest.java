@@ -1,27 +1,29 @@
 package dev.cervantvfr.vacationsplease.api.controller;
 
-import dev.cervantvfr.vacationsplease.application.service.LeaveRequestService;
-import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
-import dev.cervantvfr.vacationsplease.domain.model.Employee;
-import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
-import dev.cervantvfr.vacationsplease.domain.model.LeaveType;
-import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
-import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+
+import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
+import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
+import dev.cervantvfr.vacationsplease.application.service.LeaveRequestService;
+import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
+import dev.cervantvfr.vacationsplease.domain.model.Employee;
+import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
+import dev.cervantvfr.vacationsplease.domain.model.LeaveType;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @WebMvcTest(controllers = LeaveRequestController.class)
 @Import(dev.cervantvfr.vacationsplease.api.error.GlobalExceptionHandler.class)

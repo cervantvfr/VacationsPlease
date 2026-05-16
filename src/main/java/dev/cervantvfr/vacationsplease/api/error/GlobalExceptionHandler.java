@@ -1,15 +1,16 @@
 package dev.cervantvfr.vacationsplease.api.error;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.util.Map;
-import java.util.LinkedHashMap;
-import org.springframework.http.HttpStatus;
 
-import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
+import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

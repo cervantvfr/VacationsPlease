@@ -1,9 +1,11 @@
 package dev.cervantvfr.vacationsplease.domain.model;
 
-import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+
+import jakarta.persistence.*;
+
+import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
 
 @Entity
 @Table(name = "leave_requests")

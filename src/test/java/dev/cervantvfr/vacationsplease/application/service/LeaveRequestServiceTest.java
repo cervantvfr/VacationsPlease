@@ -1,5 +1,12 @@
 package dev.cervantvfr.vacationsplease.application.service;
 
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
 import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
@@ -9,11 +16,7 @@ import dev.cervantvfr.vacationsplease.domain.model.LeaveType;
 import dev.cervantvfr.vacationsplease.domain.repository.EmployeeRepository;
 import dev.cervantvfr.vacationsplease.domain.repository.LeaveRequestRepository;
 import dev.cervantvfr.vacationsplease.domain.repository.LeaveTypeRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(properties = {

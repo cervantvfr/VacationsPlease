@@ -1,19 +1,21 @@
 package dev.cervantvfr.vacationsplease.domain.repository;
 
-import dev.cervantvfr.vacationsplease.domain.model.Employee;
-import dev.cervantvfr.vacationsplease.domain.model.LeaveType;
-import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
-import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
 import java.time.LocalDate;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Page;
+
+import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
+import dev.cervantvfr.vacationsplease.domain.model.Employee;
+import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
+import dev.cervantvfr.vacationsplease.domain.model.LeaveType;
 
 @DataJpaTest(properties = {
     "spring.flyway.enabled=false",

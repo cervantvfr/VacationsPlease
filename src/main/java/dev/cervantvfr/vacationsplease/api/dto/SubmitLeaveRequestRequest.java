@@ -1,8 +1,9 @@
 package dev.cervantvfr.vacationsplease.api.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDate;
 
 public record SubmitLeaveRequestRequest(
     @NotNull Long employeeId,

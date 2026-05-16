@@ -1,17 +1,18 @@
 package dev.cervantvfr.vacationsplease.api.controller;
 
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.validation.Valid;
 
-import dev.cervantvfr.vacationsplease.application.service.LeaveRequestService;
-import dev.cervantvfr.vacationsplease.api.dto.SubmitLeaveRequestRequest;
 import dev.cervantvfr.vacationsplease.api.dto.LeaveRequestResponse;
+import dev.cervantvfr.vacationsplease.api.dto.SubmitLeaveRequestRequest;
 import dev.cervantvfr.vacationsplease.api.mapper.LeaveRequestApiMapper;
+import dev.cervantvfr.vacationsplease.application.service.LeaveRequestService;
 import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
 
 @RestController

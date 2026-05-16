@@ -1,17 +1,17 @@
 package dev.cervantvfr.vacationsplease.domain.repository;
 
-import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
-import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
+import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
 
 public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Long> {
     Page<LeaveRequest> findAllByOrderByCreatedAtDesc(Pageable pageable);

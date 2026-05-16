@@ -1,6 +1,7 @@
 package dev.cervantvfr.vacationsplease.domain.model;
 
 import jakarta.persistence.*;
+
 import java.time.OffsetDateTime;
 
 @Entity
