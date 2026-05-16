@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
     "spring.jpa.hibernate.ddl-auto=create-drop"
 })
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-public class LeaveRequestRepositoryTest {
+class LeaveRequestRepositoryTest {
 
     @Autowired LeaveRequestRepository leaveRequestRepository;
     @Autowired TestEntityManager testEntityManager;
