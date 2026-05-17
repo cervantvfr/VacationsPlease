@@ -27,7 +27,7 @@ import dev.cervantvfr.vacationsplease.application.service.LeaveRequestService;
 import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
 
 @RestController
-@RequestMapping("api/leave-requests")
+@RequestMapping("/api/leave-requests")
 public class LeaveRequestController {
 
     private final LeaveRequestService leaveRequestService;
