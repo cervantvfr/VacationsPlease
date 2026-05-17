@@ -35,7 +35,7 @@ public class LeaveRequestService {
     }
 
     @Transactional
-    public LeaveRequest submitRequest(
+    public LeaveRequestResponse submitRequest(
         Long employeeId,
         String leaveTypeCode,
         LocalDate startDate,
@@ -68,8 +68,8 @@ public class LeaveRequestService {
             LeaveRequestStatus.PENDING,
             reason
         );
-
-        return leaveRequestRepository.save(request);
+        LeaveRequest saved = leaveRequestRepository.save(request);
+        return LeaveRequestApiMapper.toResponse(saved);
     }
 
     @Transactional(readOnly = true)

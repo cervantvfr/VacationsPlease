@@ -1,6 +1,7 @@
 package dev.cervantvfr.vacationsplease.api.controller;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import dev.cervantvfr.vacationsplease.api.dto.LeaveRequestResponse;
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
 import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import dev.cervantvfr.vacationsplease.application.service.LeaveRequestService;
-import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
-import dev.cervantvfr.vacationsplease.domain.model.Employee;
-import dev.cervantvfr.vacationsplease.domain.model.LeaveRequest;
-import dev.cervantvfr.vacationsplease.domain.model.LeaveType;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -43,18 +41,18 @@ class LeaveRequestControllerTest {
     @WithMockUser
     @Test
     void submitLeaveRequest_returns201_whenValid() throws Exception {
-        Employee employee = new Employee("john@test.com", "John", "Test");
-        LeaveType leaveType = new LeaveType("PTO", "Paid Time Off", true);
-        LeaveRequest saved = new LeaveRequest(
-            employee,
-            leaveType,
+        LeaveRequestResponse response = new LeaveRequestResponse(
+            1L,
+            1L,
+            "PTO",
             LocalDate.of(2026, 7, 10),
             LocalDate.of(2026, 7, 12),
-            LeaveRequestStatus.PENDING,
-            "Trip"
+            "PENDING",
+            "Trip",
+            OffsetDateTime.now()            
         );
     
-        doReturn(saved).when(leaveRequestService).submitRequest(anyLong(), anyString(), any(), any(), any());
+        doReturn(response).when(leaveRequestService).submitRequest(anyLong(), anyString(), any(), any(), any());
         
         String json = """
                 {

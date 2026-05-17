@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import dev.cervantvfr.vacationsplease.api.dto.LeaveRequestResponse;
 import dev.cervantvfr.vacationsplease.application.exception.BusinessRuleViolationException;
 import dev.cervantvfr.vacationsplease.application.exception.ResourceNotFoundException;
 import dev.cervantvfr.vacationsplease.domain.enums.LeaveRequestStatus;
@@ -53,7 +54,7 @@ class LeaveRequestServiceTest {
 
     @Test
     void submitRequest_savesPendingRequest_whenValid() {
-        LeaveRequest saved = leaveRequestService.submitRequest(
+        LeaveRequestResponse saved = leaveRequestService.submitRequest(
             employee.getId(),
             leaveType.getCode(),
             LocalDate.of(2026, 7, 10),
@@ -61,9 +62,9 @@ class LeaveRequestServiceTest {
             "Family trip"
         );
 
-        assertNotNull(saved.getId());
-        assertEquals(LeaveRequestStatus.PENDING, saved.getStatus());
-        assertEquals(employee.getId(), saved.getEmployee().getId());
+        assertNotNull(saved.id());
+        assertEquals("PENDING", saved.status());
+        assertEquals(employee.getId(), saved.employeeId());
         assertEquals(1, leaveRequestRepository.count());
     }
 
